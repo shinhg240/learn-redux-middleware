@@ -6,16 +6,18 @@ import reportWebVitals from './reportWebVitals';
 import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from './modules';
 import { Provider } from 'react-redux';
-import myLogger from './middlewares/myLogger';
 import logger from 'redux-logger';
+// import { thunk } from 'redux-thunk'; //Redux Toolkit의 getDefaultMiddleware() 안에 이미 redux-thunk 포함
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
+
 const store = configureStore({
   reducer: rootReducer,
-  devTools: process.env.NODE_ENV !== 'production', // DevTools 사용 여부 설정 가능
-  middleware: (getDefaultMiddleware) =>getDefaultMiddleware().concat(myLogger, logger),
-})
+  devTools: process.env.NODE_ENV !== 'production', // 개발 환경에서만 DevTools 활성화
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(logger),
+});
 
 root.render(
   // <React.StrictMode>

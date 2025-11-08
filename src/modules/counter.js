@@ -10,6 +10,19 @@ export const increase = () => {
 
 export const decrease = () => ({ type: 'DECREASE' });
 
+//thunk 함수
+export const increaseAsync = () => (dispatch, getState) => {
+    setTimeout(() => {
+        dispatch(increase());
+    }, 1000)
+}
+//thunk 함수
+export const decreaseAsync = () => (dispatch, getState) => {
+    setTimeout(() => {
+        dispatch(decrease());
+    }, 1000)
+}
+
 const initState = 0;
 
 export default function counter(state = initState, action) {
