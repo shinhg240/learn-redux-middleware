@@ -34,7 +34,7 @@ export const getPost = (id) => async (dispatch, getState) => {
     //요청이 시작됨
     dispatch({ type: GET_POST });
     try {
-        const post = await postsAPI.getPost(id);
+        const post = await postsAPI.getPostById(id);
 
         dispatch({
             type: GET_POST_SUCCESS,
