@@ -4,7 +4,7 @@ import { createPromiseThunk, handleAsyncActions, reducerUtils } from "../lib/asy
 //각 api당 3개씩
 // const GET_POSTS = 'posts/GET_POSTS'; //Ducks Pattern
 const GET_POSTS = 'GET_POSTS';
-const GET_POSTS_SUCCESS = 'GET_POST_SUCCESS';
+const GET_POSTS_SUCCESS = 'GET_POSTS_SUCCESS';
 const GET_POSTS_ERROR = 'GET_POSTS_ERROR';
 
 const GET_POST = 'GET_POST';
