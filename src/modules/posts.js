@@ -1,5 +1,5 @@
 import * as postsAPI from '../api/posts'
-import { createPromiseThunk, handleAsyncActions, reducerUtils } from "../lib/asyncUtills";
+import { createPromiseThunk, createPromiseThunkById, handleAsyncActions, handleAsyncActionsById, reducerUtils } from "../lib/asyncUtills";
 
 //각 api당 3개씩
 // const GET_POSTS = 'posts/GET_POSTS'; //Ducks Pattern
@@ -13,30 +13,7 @@ const GET_POST_ERROR = 'GET_POST_ERROR';
 const CLEAR_POST = 'CLEAR_POST';
 
 export const getPosts = createPromiseThunk(GET_POSTS, postsAPI.getPosts);
-// export const getPost = createPromiseThunk(GET_POST, postsAPI.getPostById);
-export const getPost = (id) => async (dispatch, getState) => {
-    dispatch({
-        type: GET_POST,
-        meta: id,
-    })
-
-    try {
-        const data = await postsAPI.getPostById(id);
-        dispatch({
-            type: GET_POST_SUCCESS,
-            payload: data,
-            meta: id,
-        })
-
-    } catch (error) {
-        dispatch({
-            type: GET_POST_ERROR,
-            payload: error,
-            error: true,
-            meta: id,
-        })
-    }
-};
+export const getPost = createPromiseThunkById(GET_POST, postsAPI.getPostById);
 export const clearPost = () => ({ type: CLEAR_POST });
 
 const initState = {
@@ -45,39 +22,7 @@ const initState = {
 }
 
 const getPostsReducer = handleAsyncActions(GET_POSTS, 'posts', true);
-// const getPostReducer = handleAsyncActions(GET_POST, 'post');
-const getPostReducer = (state, action) => {
-    const id = action.meta;
-
-    switch (action.type) {
-        case GET_POST:
-            return {
-                ...state,
-                post: {
-                    ...state.post,
-                    [id]: reducerUtils.loading(state.post[id] && state.post[id].data),
-                }
-            }
-        case GET_POST_SUCCESS:
-            return {
-                ...state,
-                post: {
-                    ...state.post,
-                    [id]: reducerUtils.success(action.payload),
-                }
-            }
-        case GET_POST_ERROR:
-            return {
-                ...state,
-                post: {
-                    ...state.post,
-                    [id]: reducerUtils.error(action.error),
-                }
-            }
-        default:
-            return state;
-    }
-}
+const getPostReducer = handleAsyncActionsById(GET_POST, 'post', true);
 
 function posts(state = initState, action) {
     switch (action.type) {
