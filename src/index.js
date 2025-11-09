@@ -11,13 +11,14 @@ import logger from 'redux-logger';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-
 const store = configureStore({
   reducer: rootReducer,
   devTools: process.env.NODE_ENV !== 'production', // 개발 환경에서만 DevTools 활성화
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(logger),
 });
+
+console.log(store.getState())
 
 root.render(
   // <React.StrictMode>
