@@ -7,7 +7,9 @@ import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from './modules';
 import { Provider } from 'react-redux';
 import logger from 'redux-logger';
-// import { thunk } from 'redux-thunk'; //Redux Toolkit의 getDefaultMiddleware() 안에 이미 redux-thunk 포함
+import { BrowserRouter } from 'react-router-dom';
+// import { thunk } from 'redux-thunk';
+// > Redux Toolkit의 getDefaultMiddleware() 안에 이미 redux-thunk 포함
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -18,16 +20,14 @@ const store = configureStore({
     getDefaultMiddleware().concat(logger),
 });
 
-console.log(store.getState())
+window.store = store;
 
 root.render(
-  // <React.StrictMode>
-  //   <App />
-  // </React.StrictMode>
-
-  <Provider store={store}>
-    <App />
-  </Provider>
+  <BrowserRouter>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
