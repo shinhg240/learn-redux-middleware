@@ -11,3 +11,28 @@ function middleware(store) {
         }
     }
 }
+
+
+
+1. json server
+npx json-server ./data.json --port 4000
+
+const posts = [
+    {
+        id: 1,
+        title: '리덕스 미들웨어를 배워봅시다.',
+        body: '리덕스 미들웨어를 직접 만들어보면 이해하기가 쉽죠.',
+    },
+    {
+        id: 2,
+        title: 'redux-thunk를 사용해봅시다.',
+        body: 'redux-thunk를 사용해서 비동기 작업을 처리해보아요',
+    },
+    {
+        id: 3,
+        title: 'redux-saga도 사용해봅시다.',
+        body: '나중에 redux-saga를 사용해서 비동기 작업을 처리하는 방법도 배워볼거에요.',
+    },
+]
+
+JSON.stringfy(posts, null, 2); > 변환방법
