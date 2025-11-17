@@ -12,7 +12,11 @@ function middleware(store) {
     }
 }
 
-
+1) action type
+2) action creator
+3) saga worker
+4) saga watcher
+5) reducer
 
 1. json server
 npx json-server ./data.json --port 4000

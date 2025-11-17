@@ -4,21 +4,26 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { configureStore } from '@reduxjs/toolkit';
-import rootReducer from './modules';
+import rootReducer, { rootSaga } from './modules';
 import { Provider } from 'react-redux';
 import logger from 'redux-logger';
 import { BrowserRouter } from 'react-router-dom';
-// import { thunk } from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
 // > Redux Toolkit의 getDefaultMiddleware() 안에 이미 redux-thunk 포함
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const sagaMiddleware = createSagaMiddleware();
 
 const store = configureStore({
   reducer: rootReducer,
   devTools: process.env.NODE_ENV !== 'production', // 개발 환경에서만 DevTools 활성화
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(logger),
+    getDefaultMiddleware({ thunk: false })
+      .concat(sagaMiddleware)
+      .concat(logger),
 });
+
+sagaMiddleware.run(rootSaga);
 
 window.store = store;
 
