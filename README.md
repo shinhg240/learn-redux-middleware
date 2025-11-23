@@ -14,8 +14,8 @@ function middleware(store) {
 
 1) action type
 2) action creator
-3) saga worker
-4) saga watcher
+3) saga worker()  
+4) saga watcher(액션 모니터링)
 5) reducer
 
 1. json server

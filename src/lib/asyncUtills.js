@@ -120,7 +120,7 @@ export const handleAsyncActionsById = (type, key, keepData) => {
 }
 
 export const reducerUtils = {
-    inital: (data) => ({
+    inital: (data = null) => ({
         loading: false,
         data: data,
         error: null,
