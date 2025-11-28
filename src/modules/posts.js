@@ -1,6 +1,6 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { /* call, put, */ takeEvery } from 'redux-saga/effects';
 import * as postsAPI from '../api/posts'
-import { createPromiseThunk, createPromiseThunkById, handleAsyncActions, handleAsyncActionsById, reducerUtils } from "../lib/asyncUtills";
+import { createPromiseSaga, createPromiseSagaById, handleAsyncActions, handleAsyncActionsById, reducerUtils } from "../lib/asyncUtills";
 
 //각 api당 3개씩
 // const GET_POSTS = 'posts/GET_POSTS'; //Ducks Pattern
@@ -20,39 +20,42 @@ export const getPost = (id) => ({
     meta: id,
 });
 
-function* getPostsSaga() {
-    try {
-        const posts = yield call(postsAPI.getPosts);
-        yield put({
-            type: GET_POSTS_SUCCESS,
-            payload: posts,
-        })
-    } catch (error) {
-        yield put({
-            type: GET_POSTS_ERROR,
-            error: true,
-            payload: error,
-        })
-    }
-}
+const getPostsSaga = createPromiseSaga(GET_POSTS, postsAPI.getPosts);
+const getPostSaga = createPromiseSagaById(GET_POST, postsAPI.getPostById)
 
-function* getPostSaga(action) {
-    const id = action.payload;
-    try {
-        const post = yield call(postsAPI.getPostById, id);
-        yield put({
-            type: GET_POST_SUCCESS,
-            payload: post,
-            meta: id,
-        })
-    } catch (error) {
-        yield put({
-            type: GET_POST_ERROR,
-            error: true,
-            payload: error,
-        })
-    }
-}
+// function* getPostsSaga() {
+//     try {
+//         const posts = yield call(postsAPI.getPosts);
+//         yield put({
+//             type: GET_POSTS_SUCCESS,
+//             payload: posts,
+//         })
+//     } catch (error) {
+//         yield put({
+//             type: GET_POSTS_ERROR,
+//             error: true,
+//             payload: error,
+//         })
+//     }
+// }
+
+// function* getPostSaga(action) {
+//     const id = action.payload;
+//     try {
+//         const post = yield call(postsAPI.getPostById, id);
+//         yield put({
+//             type: GET_POST_SUCCESS,
+//             payload: post,
+//             meta: id,
+//         })
+//     } catch (error) {
+//         yield put({
+//             type: GET_POST_ERROR,
+//             error: true,
+//             payload: error,
+//         })
+//     }
+// }
 
 export function* postsSaga() {
     yield takeEvery(GET_POSTS, getPostsSaga);
